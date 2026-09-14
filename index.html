@@ -121,30 +121,37 @@
 
   /* ============================= HEADER ============================= */
   .page-head{
+    position: relative;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 36px 0 22px;
+    padding: 44px 0 28px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px 32px;
-    align-items: flex-end;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     border-bottom: 1px solid var(--line);
   }
   .page-head .eyebrow{
     font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--accent-deep);
-    font-weight: 600;
-    margin: 0 0 8px;
+    font-weight: 700;
+    margin: 0 0 10px;
   }
   .page-head h1{
-    font-size: 27px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     color: var(--ink);
+  }
+  .page-head .title-bar{
+    width: 60px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--accent);
+    margin: 16px auto 0;
   }
   .page-head .sub{
     margin-top: 6px;
@@ -153,6 +160,9 @@
     max-width: 62ch;
   }
   .source-tag{
+    position: absolute;
+    top: 44px;
+    right: 0;
     font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
     color: var(--ink-muted);
@@ -458,8 +468,8 @@
     .kpi-row, .kpi-row.cols-4, .kpi-row.cols-6{ grid-template-columns: 1fr 1fr; }
     .grid.cols-2, .grid.cols-3{ grid-template-columns: 1fr; }
     .bar-row{ grid-template-columns: 84px 1fr 48px; }
-    .page-head{ flex-direction: column; align-items: flex-start; }
-    .source-tag{ text-align: left; }
+    .page-head{ padding: 32px 0 20px; }
+    .source-tag{ position: static; margin-top: 16px; text-align: center; }
     .map-frame{ height: 420px; }
   }
   @media (max-width: 460px){
@@ -483,7 +493,7 @@ window.__LOCALIDADES_DATA__ = [{"key": "SANTA FE", "rings": [[[-74.0684, 4.6288]
     <div>
       <p class="eyebrow">IDU · DTINI — Visor de infraestructura</p>
       <h1>Inventario de puentes de Bogotá</h1>
-      <p class="sub">Ubicación geográfica y estado estructural de los 1.171 puentes registrados en el inventario 2025-II, cruzado con la vulnerabilidad priorizada (alto colapso / alto daño) y el detalle del Contrato IDU-1556 de 2017. Prototipo interactivo — filtra por localidad, tipo, malla vial o estado.</p>
+      <div class="title-bar" aria-hidden="true"></div>
     </div>
   </header>
 
@@ -524,7 +534,6 @@ window.__LOCALIDADES_DATA__ = [{"key": "SANTA FE", "rings": [[[-74.0684, 4.6288]
       </div>
       <div class="legend" id="legend-mapa"></div>
       <div id="map-puentes" class="map-frame"></div>
-      <p class="note">Imagen satelital (Esri World Imagery) con el límite de las 20 localidades de Bogotá superpuesto. Cada punto es un puente (centroide de su geometría en Shapefile_V2), coloreado por estado estructural — responde a todos los filtros de arriba. Al elegir una localidad en el filtro, el mapa hace zoom automáticamente a esa zona; con "Todas" vuelve a la ciudad completa. Pasa el cursor sobre un puente o una localidad para ver el detalle; requiere conexión a internet para cargar la imagen satelital.</p>
     </div>
   </section>
 
@@ -536,7 +545,6 @@ window.__LOCALIDADES_DATA__ = [{"key": "SANTA FE", "rings": [[[-74.0684, 4.6288]
       </div>
       <div class="legend" id="legend-estado"></div>
       <div class="bars" id="chart-estructural"></div>
-      <p class="note">Capacidad portante y condición física del puente. Regular y Malo priorizan intervención. Los puentes "Sin dato" no cuentan con inspección por dificultad de acceso (inseguridad, o ubicación sobre canal / cuerpo de agua).</p>
     </div>
   </section>
 
@@ -545,7 +553,6 @@ window.__LOCALIDADES_DATA__ = [{"key": "SANTA FE", "rings": [[[-74.0684, 4.6288]
       <h3>Vulnerabilidad y priorización de intervención</h3>
       <span class="count-tag" id="tag-vuln"></span>
     </div>
-    <p class="note" style="margin-top:-6px; margin-bottom:16px; border-top:none; padding-top:0;">28 puentes identificados con vulnerabilidad priorizada: 3 vehiculares en alto riesgo de colapso y 25 (20 vehiculares + 5 peatonales) en alto riesgo de daño. Un puente adicional de la lista ya fue demolido. Estado de intervención y contrato de conservación actualizados con Puentes_Escenario_3.xlsx.</p>
 
     <div class="kpi-row cols-4" id="vuln-kpi-row" style="margin-bottom: 20px;"></div>
 
@@ -578,7 +585,6 @@ window.__LOCALIDADES_DATA__ = [{"key": "SANTA FE", "rings": [[[-74.0684, 4.6288]
         <tbody id="vuln-table-body"></tbody>
       </table>
     </div>
-    <p class="note">Cruce por PK_ID con el inventario 2025-II. El puente 22146082 (Demolido) no aparece en el inventario vigente y no queda incluido en los demás gráficos del tablero.</p>
   </section>
 
   <section class="grid" style="grid-template-columns: 1fr;">
@@ -649,7 +655,6 @@ window.__LOCALIDADES_DATA__ = [{"key": "SANTA FE", "rings": [[[-74.0684, 4.6288]
   </section>
 
   <footer class="page-foot">
-    <span>Prototipo de visualización — construido a partir del archivo cargado, no reemplaza el tablero oficial.</span>
     <span>1.171 puentes · Bogotá D.C.</span>
   </footer>
 </div>
@@ -1415,4 +1420,3 @@ window.__LOCALIDADES_DATA__ = [{"key": "SANTA FE", "rings": [[[-74.0684, 4.6288]
 
 </body>
 </html>
-
